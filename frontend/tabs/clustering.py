@@ -5,15 +5,15 @@ from sklearn.decomposition import PCA
 import numpy as np
 
 def render(ai):
-    st.title("🧠 AI Cluster Visualization")
+    st.title("Partner Segmentation Distribution")
     
     # Stats
     n_clusters = ai.matrix['cluster'].nunique() - 1 
-    n_outliers = len(ai.matrix[ai.matrix['cluster'] == -1])
+    n_outliers = len(ai.matrix[ai.matrix['cluster'] == 'Growth-Outlier'])
     
     c1, c2 = st.columns(2)
-    with c1: st.metric("Total Clusters Formed", n_clusters)
-    with c2: st.metric("Outlier Partners", n_outliers)
+    with c1: st.metric("Total Segments Formed", n_clusters)
+    with c2: st.metric("Outlier Accounts", n_outliers)
     
     # 3D Plot Logic
     # Drop categorical/non-numeric for PCA
@@ -31,7 +31,7 @@ def render(ai):
         color='Cluster', 
         symbol='State', 
         hover_name='Partner', 
-        title="Partner DNA Map (Color = Behavior, Shape = Region)",
+        title="Segment Analysis (Color = Segment, Shape = Region)",
         color_discrete_sequence=px.colors.qualitative.Bold
     )
     st.plotly_chart(fig, use_container_width=True)
